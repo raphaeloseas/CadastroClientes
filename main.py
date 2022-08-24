@@ -8,7 +8,6 @@ from tkinter import messagebox
 from tkcalendar import Calendar
 from tkcalendar import DateEntry
 import sys
-from tkinter.messagebox import showerror, showwarning, showinfo
 
 ############# CRIANDO O DATA BASE ###############
 conexao = sqlite3.connect('banco_clientes.db')
@@ -93,7 +92,7 @@ def popular_banco():
 def conexao_bancoPesquisa():
     conexao = sqlite3.connect('banco_clientes.db')
     vc = conexao.cursor()
-    vc.execute(f'SELECT * FROM clientes WHERE OS LIKE "%{entry_pesquisa.get()}%"')
+    vc.execute(f'SELECT * FROM clientes WHERE OS LIKE "%{entry_pesquisa.get()}%" OR Nome LIKE "%{entry_pesquisa.get()}%"')
     res=vc.fetchall()
     vc.close()
     return res
@@ -154,7 +153,8 @@ def exportar_dados():
 ############# TITULO DA JANELA DO APP ###############
 window.title('Cadastro de Clientes')
 ############# TAMANHO DA JANELA DO APP ###############
-window.geometry('1520x800')
+window.geometry('1520x800+400+153')
+window.resizable(width=0, height=0)
 # window.resizable(0, 0)
 ############# CRIANDO UMA NOVA ABA NO APP ###############
 nb= ttk.Notebook(window)
@@ -248,7 +248,7 @@ calEntrega.place(x=151, y=151, width=110, height=20)
 ##### LABEL OS  #####
 label_os = tk.Label(dadosProdutos, text='OS', font='Arial 12')
 label_os.pack(side='bottom')
-entry_os = tk.Entry(dadosProdutos, font='Arial 12', relief='solid')
+entry_os = tk.Entry(dadosProdutos, font='Arial 12', relief='solid', justify='center')
 entry_os.pack(side='bottom')
 ############# CRIANDO SCROLLBAR PARA O TREEVIEW ############
 tv_frame = Frame(tb2)
